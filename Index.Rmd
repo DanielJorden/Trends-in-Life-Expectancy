@@ -31,7 +31,7 @@ The COVID-19 pandemic resulted in the closure of many hospitals and social activ
 
 This data includes statistics about health life expectancy during the years of peak COVID-19. It could be interesting to see how the pandemic impacted healthy life expectancy and how rates compare to life before lockdown and other regions.
 
-The rationale for this study is that previous graphs provided visualisations of health life expectancy for each region, although these were separate. The graph in this project offers a direct side-by-side comparison between different areas, making it easier to see how trends changed overtime, and how this varied in relation to other regions.
+The rationale for this study is that previous graphs provided visualisations of health life expectancy for each region, although these were separate. The graph in this project offers a direct side-by-side comparison between different areas, making it easier to see how trends changed overtime, and how this varied in relation to other regions. It also adds a dynamic aspect to achieve greater engagement with the changing trends.
 
 
 
@@ -69,13 +69,23 @@ There were also some formatting changes that were necessary to make as the origi
 #Loading in the data and remove first 5 rows as this is just text information about the data
 data <- read.csv(here("data","rawdata","trends in life expectancy.csv")) %>% slice(-1:-5)
 
+#We should first remove all N/A values
+data_filtered <- data %>% drop_na()
+
+#Now we need to check there are no missing values
+if(sum(is.na(data_filtered)) == 0) {
+  print("No missing vaules")
+} else {
+  print(paste("Count of total missing values:", sum(is.na(data_filtered))))
+}
+
 #Remove header row and set first row as column names
-colnames(data) <- data[1, ]
-data <- data[-1, ]
-colnames(data) <- make.names(colnames(data))
+colnames(data_filtered) <- data_filtered[1, ]
+data_filtered <- data_filtered[-1, ]
+colnames(data_filtered) <- make.names(colnames(data_filtered))
 
 #Remove data relating to UCI and LCI, so that only healthy life expectancy values remain
-data_cleaned <- data %>%
+data_cleaned <- data_filtered %>%
   select(-contains("LCI"), -contains("UCI"))
 
 #Change names in the Year column
@@ -244,7 +254,7 @@ interactive
 
 ## Conclusion
 
-When interpreting the graph, there is a clear decrease in healthy life expectancy (HLE) during the COVID-19 years, particularly 2020-2021. This appears to be the case for nearly all regions, highlighting the adverse impacts the disease had on the populations health. It is clear from the graph that Northern Ireland exhibits the least decrease during the COVID years. It is also evident that the North East has the worst HLE across all years, approximately 6 years lower than the South East (which has the highest of all regions). This could be due to a range of reasons, a possible one being different lifestyles between these regions.
+When interpreting the graph, there is a clear decrease in healthy life expectancy (HLE) during the COVID-19 years, particularly 2020-2021. This appears to be the case for nearly all regions, highlighting the adverse impacts the disease had on the populations health. It is clear from the graph that Northern Ireland exhibits the smallest decrease during the COVID years, with the West Midlands displaying the sharpest. It is also evident that the North East has the worst HLE across all years, approximately 6 years lower than the South East (which has the highest of all regions). This could be due to a range of reasons, a possible one being different lifestyles between these regions.
 
 A notable limitation of this graph/the data is that it does not extend to more recent years, or provide any predictions about future HLE projections. This data is therefore unable to inform us about how external challenges, such as post-pandemic recovery, may influence HLE, or provide an indication of the time-frame it will take to return to HLE levels of previous years. An additional consideration is that it does not explore the possible factors that influence healthy life expectancy. It is clear that HLE decreased during COVID years, although the precise reasons for this remains ambiguous. Increased social isolation, restricted access to healthcare, and higher rates of stress are likely factors, although they remain unexamined in this graph.
 
