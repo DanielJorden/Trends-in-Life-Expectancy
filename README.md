@@ -8,4 +8,4 @@ The dataset is available by the Office for National Statistics and was collected
 The data can be found at: <https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthandlifeexpectancies/bulletins/healthstatelifeexpectanciesuk/between2011to2013and2020to2022>
 If you are downloading the dataset from this Github repository, it should download in .csv format and the code has been written to load it in this format
 
-This project was inspired by the long-lasting effects that the COVID-19 pandemic had. Just from initial interpretation, there appears to be a reduction in healthy life expectancy for all UK coutnries and regions during the COVID years, specifically 2020-2021. This seems to be most prominent for the West Midlands and the least change in Northern Ireland.
+This project was inspired by the long-lasting effects that the COVID-19 pandemic had. Just from initial interpretation, there appears to be a reduction in healthy life expectancy for all UK countries and regions during the COVID years, specifically 2020-2021. This seems to be most prominent for the West Midlands and the least change in Northern Ireland.
