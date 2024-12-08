@@ -1,3 +1,5 @@
+knitr::opts_chunk$set(echo = TRUE, dev = "png")
+
 #Housekeeping:
 #Clear the workspace
 rm(list = ls())
@@ -18,13 +20,23 @@ lapply(required_packages, library, character.only = TRUE) #loads each package
 #Loading in the data and remove first 5 rows as this is just text information about the data
 data <- read.csv(here("data","rawdata","trends in life expectancy.csv")) %>% slice(-1:-5)
 
+#We should first remove all N/A values
+data_filtered <- data %>% drop_na()
+
+#Now we need to check there are no missing values
+if(sum(is.na(data_filtered)) == 0) {
+  print("No missing vaules")
+} else {
+  print(paste("Count of total missing values:", sum(is.na(data_filtered))))
+}
+
 #Remove header row and set first row as column names
-colnames(data) <- data[1, ]
-data <- data[-1, ]
-colnames(data) <- make.names(colnames(data))
+colnames(data_filtered) <- data_filtered[1, ]
+data_filtered <- data_filtered[-1, ]
+colnames(data_filtered) <- make.names(colnames(data_filtered))
 
 #Remove data relating to UCI and LCI, so that only healthy life expectancy values remain
-data_cleaned <- data %>%
+data_cleaned <- data_filtered %>%
   select(-contains("LCI"), -contains("UCI"))
 
 #Change names in the Year column
@@ -124,7 +136,6 @@ animated <- plot +
 #This will allow the gif to be knit into the html document
 if(knitr::is_html_output()){ anim_save(here("plots" , "animated.gif"), 
                                        animated, renderer = gifski_renderer())}
-
 
 #Save the animated plot
 anim_save(here("plots", "animated.gif"), animated, renderer = gifski_renderer())
