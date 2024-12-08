@@ -1,4 +1,3 @@
-knitr::opts_chunk$set(echo = TRUE, dev = "png")
 
 #Housekeeping:
 #Clear the workspace
