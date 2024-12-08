@@ -1,4 +1,4 @@
-## Trends in Health Life Expectancy
+## Trends in Healthy Life Expectancy
 #### PSY6422 Project
 
 The data for this project is about healthy life expectancy in the countries and 9 main regions of the UK from 2012-2021. I am looking at how rates of healthy life expectancy change for each region over the years, as well as how they compare to the other areas. The data provides individual infomration for males and females, although I am averaging this, looking at gender as a whole.
