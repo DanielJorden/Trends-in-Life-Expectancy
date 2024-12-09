@@ -24,7 +24,7 @@ lapply(required_packages, library, character.only = TRUE) #loads each package
 ```
 
 
-## Research Question:
+## **Research Question:**
 **How has healthy life expectancy changed across the years for England, Northern Ireland, Wales, and English regions?**
 
 The COVID-19 pandemic resulted in the closure of many hospitals and social activities, impeding access to healthcare and driving an increase in isolation. This had adverse impacts on both physical and mental health, increasing rates of depression and stress (Mehlmann-Wicks, 2022), factors likely influencing healthy life expectancy. The unavailability of sufficient healthcare access may also have hindered illness diagnoses' and exacerbated health inequalities.
