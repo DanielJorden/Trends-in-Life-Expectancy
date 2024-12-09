@@ -187,6 +187,9 @@ plot <- ggplot(data_final, aes(x = Year, y = Mean_Healthy_Life_Expectancy, color
   scale_x_continuous(breaks = unique(data_final$Year)) + 
   theme_bw() +
    theme(
+    plot.margin = margin(t = 20, r = 10, b = 10, l = 10), # Add space above the plot
+    plot.title = element_text(size = 14, face = "bold", hjust = 0.5, vjust = 1), # Adjust title appearance and positioning
+    axis.text.x = element_text(angle = 45, hjust = 1),
     panel.grid.major = element_line(color = "gray87", size = 0.5), #Changed the strength of the grid lines
     panel.background = element_rect(fill = "seashell", color = NA), #Changed the background colour of the graph
     plot.background = element_rect(fill = "white", color = NA),
@@ -195,7 +198,7 @@ plot <- ggplot(data_final, aes(x = Year, y = Mean_Healthy_Life_Expectancy, color
     legend.background = element_rect(fill = "white", color = "black"),
     legend.key = element_blank(),
     legend.box = "vertical",
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))# I ensured the x-axis labels remain rotated for better clarity
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))# I rotated the x-axis labels for better clarity
    )
 
 #View plot
@@ -215,14 +218,14 @@ To demonstrate a higher level of coding, I made the graph animated so that it pr
 ```{r, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, dpi = 100}
 
 #Animating plot
-animated <- plot +
- geom_point(size = 2, aes(group = seq_along(Year))) +
-  transition_reveal(Year) +
-  ggtitle('Health Life Expectancy Across the countries and 9 English Regions of the UK: {round(frame_along)}')
-
-
+animated <- animate(
+  plot + 
+    geom_point(size = 2, aes(group = seq_along(Year))) +
+    transition_reveal(Year) +
+    ggtitle('Health Life Expectancy Across the countries\nand 9 English Regions of the UK: {round(frame_along)}'))
+  
 #This will allow the gif to be knit into the html document
-if(knitr::is_html_output()){ anim_save(here("plots" , "animated.gif"), 
+if(knitr::is_html_output()){ anim_save(here("plots" , "anim240188980.gif"), 
             animated, renderer = gifski_renderer())}
                                                     
 #Save the animated plot
