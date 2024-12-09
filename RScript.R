@@ -107,20 +107,20 @@ plot <- ggplot(data_final, aes(x = Year, y = Mean_Healthy_Life_Expectancy, color
        x = "Year", 
        y = "Life Expectancy", 
        color = "Region") + 
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + # I rotated x-axis labels for better clarity
   scale_y_continuous(limits = c(58, 68), 
                      breaks = seq(58, 68, by = 2)) + # Set axis limits and changed scale intervals to improve readability. I found these values gave the clearest representation
   scale_x_continuous(breaks = unique(data_final$Year)) + 
   theme_bw() +
   theme(
-    panel.grid.major = element_line(color = "gray87", size = 0.5),
-    panel.background = element_rect(fill = "seashell", color = NA),
+    panel.grid.major = element_line(color = "gray87", size = 0.5), #Changed the strength of the grid lines
+    panel.background = element_rect(fill = "seashell", color = NA), #Changed the background colour of the graph
     plot.background = element_rect(fill = "white", color = NA),
     axis.text = element_text(size = 10),
     axis.title = element_text(size = 10, face = "bold"),
     legend.background = element_rect(fill = "white", color = "black"),
     legend.key = element_blank(),
-    legend.box = "vertical"
+    legend.box = "vertical",
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))# I ensured the x-axis labels remain rotated for better clarity
   )
 
 #View plot
