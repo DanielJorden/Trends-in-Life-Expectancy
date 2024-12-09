@@ -50,18 +50,15 @@ data_long <- data_cleaned %>% pivot_longer(cols = starts_with("2"), names_to = "
 #Display column names
 colnames(data_long)
 
-#Calculate midpoint for year
+#Calculate midpoint for year and clean up columns
 data_long <- data_long %>%
   mutate(
     Start_Year = as.numeric(substr(Year, 1, 4)),  # Extract the start year
     End_Year = as.numeric(substr(Year, 6, 9)),    # Extract the end year
     Midpoint_Year = (Start_Year + End_Year) / 2   # Calculate the midpoint
-  ) %>% filter(!is.na(Midpoint_Year))
-
-#cleaning up columns: Remove old "Year", "Start_Year", and "End_Year", then rename Midpoint_Year 
-data_long <- data_long %>%
+  ) %>% filter(!is.na(Midpoint_Year)) %>%
   select(-Year, -Start_Year, -End_Year) %>%
-  rename(Year = Midpoint_Year)
+  rename(Year = Midpoint_Year) #Remove old "Year", "Start_Year", and "End_Year" columns, then rename Midpoint_Year column
 
 #Check if year and life expectancy columns are numeric
 print(sapply(data_long, is.numeric))
@@ -72,10 +69,16 @@ data_long <- data_long %>% mutate(Life.Expectancy = as.numeric(Life.Expectancy))
 #Check data is now numeric
 print(is.numeric(data_long$Life.Expectancy))
 
-#Calculate mean across gender for each region and year and assign it as the final prepared version of data
-data_final <- data_long %>% group_by(Area.name, Year) %>%
-  summarize(mean_life_expectancy = mean(Life.Expectancy, na.rm = TRUE), .groups = "drop") %>% 
-  filter(mean_life_expectancy != "NaN")
+#Groups dataset by columns and allows flexibility with other datasets. Important if dataset is updated to Include Scotland
+summarize_data <- function(data, group_var, value_var) {
+  data %>%
+    group_by(across(all_of(group_var))) %>%
+    summarize(mean_value = mean(.data[[value_var]], na.rm = TRUE)) #Calculate mean across gender for each region and year
+}
+
+#Calls the summarise function and assigns it to data_final
+data_final <- summarize_data(data_long, group_var = c("Area.name", "Year"), value_var = "Life.Expectancy") %>%
+  filter(!is.nan(mean_value))  # Ensure no NaN values remain
 
 #Change column names
 colnames(data_final) <- c("Region", "Year", "Mean_Healthy_Life_Expectancy")
@@ -110,7 +113,8 @@ plot <- ggplot(data_final, aes(x = Year, y = Mean_Healthy_Life_Expectancy, color
   scale_x_continuous(breaks = unique(data_final$Year)) + 
   theme_bw() +
   theme(
-    panel.background = element_rect(fill = "lightgrey", color = NA),
+    panel.grid.major = element_line(color = "gray87", size = 0.5),
+    panel.background = element_rect(fill = "seashell", color = NA),
     plot.background = element_rect(fill = "white", color = NA),
     axis.text = element_text(size = 10),
     axis.title = element_text(size = 10, face = "bold"),
