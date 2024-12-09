@@ -223,16 +223,10 @@ animated <- animate(
     geom_point(size = 2, aes(group = seq_along(Year))) +
     transition_reveal(Year) +
     ggtitle('Health Life Expectancy Across the Countries\nand 9 English Regions of the UK: {round(frame_along)}'))
-  
-#This will allow the gif to be knit into the html document
-if(knitr::is_html_output()){ anim_save(here("plots" , "anim240188980.gif"), 
-            animated, renderer = gifski_renderer())}
-                                                    
+
 #Save the animated plot
 anim_save(here("plots", "anim240188980.gif"), animated, renderer = gifski_renderer())
 ```
-
-
 ![Life Expectancy Animation](plots/anim240188980.gif)
 
 
@@ -240,14 +234,15 @@ anim_save(here("plots", "anim240188980.gif"), animated, renderer = gifski_render
 ## Interactive graph
 I also played around with making the graph interactive, although this would not knit to an html when combined with the animation. While this may allow for a slightly clearer interpretation of each region via the tooltip, I chose the animation over the interactive version as I believe it more closely addresses the question, by better capturing the dynamic nature of how trends change over time.
 ```{r, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, dpi = 100}
-#I have included the code for the interaction
+#I have included the code for the interactive version
 #Making plot interactive
 interactive_plot <- ggplotly(plot, tooltip = "text")
 
 #Customising hover box
 interactive <- interactive_plot %>%
   layout(hoverlabel = list(bgcolor = "white", font = list(size = 10, color = "black"), 
-                           bordercolor = "blue"), title = list(text = "Health Life Expectancy Across the Countries and 9 English Regions of the UK: "), margin = list(t = 50)) %>% 
+                           bordercolor = "blue"), title = list(text = "Health Life Expectancy Across the Countries and 9 English Regions of the UK: "),
+         margin = list(t = 50)) %>% 
   style(line = list(width = 1.5, opacity = 0.5),
         marker = list(size = 6, opacity = 0.4),
         mode = "line+markers")

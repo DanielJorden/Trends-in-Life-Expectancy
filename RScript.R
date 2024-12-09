@@ -139,21 +139,18 @@ animated <- animate(
     transition_reveal(Year) +
     ggtitle('Health Life Expectancy Across the Countries\nand 9 English Regions of the UK: {round(frame_along)}'))
 
-#This will allow the gif to be knit into the html document
-if(knitr::is_html_output()){ anim_save(here("plots" , "anim240188980.gif"), 
-                                       animated, renderer = gifski_renderer())}
-
 #Save the animated plot
 anim_save(here("plots", "anim240188980.gif"), animated, renderer = gifski_renderer())
 
-#I have included the code for the interaction
+#I have included the code for the interactive version
 #Making plot interactive
 interactive_plot <- ggplotly(plot, tooltip = "text")
 
 #Customising hover box
 interactive <- interactive_plot %>%
   layout(hoverlabel = list(bgcolor = "white", font = list(size = 10, color = "black"), 
-                           bordercolor = "blue"), title = list(text = "Health Life Expectancy Across the Countries and 9 English Regions of the UK: "), margin = list(t = 50)) %>% 
+                           bordercolor = "blue"), title = list(text = "Health Life Expectancy Across the Countries and 9 English Regions of the UK: "),
+         margin = list(t = 50)) %>% 
   style(line = list(width = 1.5, opacity = 0.5),
         marker = list(size = 6, opacity = 0.4),
         mode = "line+markers")
