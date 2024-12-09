@@ -127,7 +127,7 @@ plot <- ggplot(data_final, aes(x = Year, y = Mean_Healthy_Life_Expectancy, color
 plot
 
 #If you would like to save the plot:
-ggsave(here("plots", "plot.png"), bg = "white", width = 10, height = 8, units = "in")
+ggsave(here("plots", "viz240188980.png"), bg = "white", width = 10, height = 8, units = "in")
 
 #Animating plot
 animated <- plot +
@@ -141,7 +141,7 @@ if(knitr::is_html_output()){ anim_save(here("plots" , "animated.gif"),
                                        animated, renderer = gifski_renderer())}
 
 #Save the animated plot
-anim_save(here("plots", "animated.gif"), animated, renderer = gifski_renderer())
+anim_save(here("plots", "anim240188980.gif"), animated, renderer = gifski_renderer())
 
 #I have included the code for the interaction
 #Making plot interactive

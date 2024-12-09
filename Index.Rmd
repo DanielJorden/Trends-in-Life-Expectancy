@@ -202,7 +202,7 @@ plot <- ggplot(data_final, aes(x = Year, y = Mean_Healthy_Life_Expectancy, color
 plot
 
 #If you would like to save the plot:
-ggsave(here("plots", "plot.png"), bg = "white", width = 10, height = 8, units = "in")
+ggsave(here("plots", "viz240188980.png"), bg = "white", width = 10, height = 8, units = "in")
 
 ```
 The graph now has a cleaner appearance and, despite some overlap, the lines are easier to read. I decided to keep the background a basic light colour as I think it works well with contrasting the different line colours, as well as the grid lines to help better read the Y axis
@@ -226,11 +226,11 @@ if(knitr::is_html_output()){ anim_save(here("plots" , "animated.gif"),
             animated, renderer = gifski_renderer())}
                                                     
 #Save the animated plot
-anim_save(here("plots", "animated.gif"), animated, renderer = gifski_renderer())
+anim_save(here("plots", "anim240188980.gif"), animated, renderer = gifski_renderer())
 ```
 
 
-![Life Expectancy Animation](plots/animated.gif)
+![Life Expectancy Animation](plots/anim240188980.gif)
 
 
 
