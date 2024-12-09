@@ -16,7 +16,7 @@ lapply(required_packages, library, character.only = TRUE) #loads each package
 
 #If the data is downloaded from github, it should be in a folder called "data" and already exist in .csv format.
 
-#Loading in the data and remove first 5 rows as this is just text information about the data
+#Loading in the data and remove first 5 rows as this is just metadata information about the data
 data <- read.csv(here("data","rawdata","trends in life expectancy.csv")) %>% slice(-1:-5)
 
 #We should first remove all N/A values
