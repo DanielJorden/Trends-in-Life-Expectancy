@@ -242,7 +242,7 @@ if(knitr::is_html_output()){ anim_save(here("plots" , "anim240188980.gif"),
 
 
 
-## **Interactive graph:**
+## **Interactive graph:** 
 I also played around with making the graph interactive, although this would not knit to an html when combined with the animation. While this may allow for a slightly clearer interpretation of each region via the tooltip, I chose the animation over the interactive version as I believe it more closely addresses the question, by better capturing the dynamic nature of how trends change over time.
 ```{r, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, dpi = 100}
 #I have included the code for the interaction
