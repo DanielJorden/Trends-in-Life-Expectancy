@@ -103,7 +103,7 @@ plot <- ggplot(data_final, aes(x = Year, y = Mean_Healthy_Life_Expectancy, color
   geom_line(linewidth = 0.8, alpha = 0.5) + 
   scale_color_manual(values = custom_colors) + #Here I thinned the lines and added transparency as this makes it clearer to distinguish between the regions when overlapping and in close proximity 
   geom_point(size = 2) + 
-  labs(title = "Health Life Expectancy Across the countries\nand 9 English Regions of the UK:", 
+  labs(title = "Health Life Expectancy Across the Countries\nand 9 English Regions of the UK:", 
        x = "Year", 
        y = "Life Expectancy", 
        color = "Region") + 
@@ -137,7 +137,7 @@ animated <- animate(
   plot + 
     geom_point(size = 2, aes(group = seq_along(Year))) +
     transition_reveal(Year) +
-    ggtitle('Health Life Expectancy Across the countries\nand 9 English Regions of the UK: {round(frame_along)}'))
+    ggtitle('Health Life Expectancy Across the Countries\nand 9 English Regions of the UK: {round(frame_along)}'))
 
 #This will allow the gif to be knit into the html document
 if(knitr::is_html_output()){ anim_save(here("plots" , "anim240188980.gif"), 
@@ -153,7 +153,7 @@ interactive_plot <- ggplotly(plot, tooltip = "text")
 #Customising hover box
 interactive <- interactive_plot %>%
   layout(hoverlabel = list(bgcolor = "white", font = list(size = 10, color = "black"), 
-                           bordercolor = "blue"), title = list(text = "Health Life Expectancy Across the countries and 9 English Regions of the UK: "), margin = list(t = 50)) %>% 
+                           bordercolor = "blue"), title = list(text = "Health Life Expectancy Across the Countries and 9 English Regions of the UK: "), margin = list(t = 50)) %>% 
   style(line = list(width = 1.5, opacity = 0.5),
         marker = list(size = 6, opacity = 0.4),
         mode = "line+markers")
