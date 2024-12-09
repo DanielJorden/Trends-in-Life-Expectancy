@@ -1,5 +1,5 @@
 ---
-title: "Health Life Expectancy Across the Countries and 9 English Regions of the UK"
+title: "**Health Life Expectancy Across the Countries and 9 English Regions of the UK**"
 author: "Registration number: 240188980"
 date: "2024-11-24"
 output: 
@@ -25,7 +25,7 @@ lapply(required_packages, library, character.only = TRUE) #loads each package
 ```
 
 
-## Research Question:
+## **Research Question:**
 **How has healthy life expectancy changed across the years for England, Northern Ireland, Wales, and English regions?**
 
 The COVID-19 pandemic resulted in the closure of many hospitals and social activities, impeding access to healthcare and driving an increase in isolation. This had adverse impacts on both physical and mental health, increasing rates of depression and stress (Mehlmann-Wicks, 2022), factors likely influencing healthy life expectancy. The unavailability of sufficient healthcare access may also have hindered illness diagnoses' and exacerbated health inequalities.
@@ -36,7 +36,7 @@ The rationale for this study is that previous graphs provided visualisations of 
 
 
 
-## Data origins:
+## **Data origins:**
 The data for this project was made available by the Office for National Statistics
 It was collected as part of an annual population survey and census, where healthy life expectancies are estimated using a Sullivan life table.
 
@@ -49,7 +49,7 @@ The raw dataset can be downloaded at:
 
 
 
-## Data preperation
+## **Data preperation:**
 
 For this question, all regions in the dataset are included in the visualisation.
 However, the health life expectancies for males and females are averaged into a single value for each region and year, and as years existed as a range, midpoints were used to improve clarity and plotting.
@@ -66,7 +66,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-#### Loading in and initial clean of data
+#### **Loading in and initial clean of data**
 ```{r echo= TRUE, warning = FALSE, message = FALSE}
 #Loading in the data and remove first 5 rows as this is just metadata information about the data
 data <- read.csv(here("data","rawdata","trends in life expectancy.csv")) %>% slice(-1:-5)
@@ -105,7 +105,7 @@ colnames(data_long)
 ```
 
 
-#### Creating midpoints and means
+#### **Creating midpoints and means**
 In the raw data, 'Years' existed as overlapping ranges (e.g., 2011-2013 and 2012-2014). I therefore used the midpoint value for each year to simplify the scale and improve readability
 ```{r echo= TRUE, warning = FALSE, message = FALSE}
 
@@ -164,8 +164,8 @@ write.csv(data_final, here("data", "prepped_data", "prepped_data.csv"), row.name
 
 
 
-## Creating the visualisation
-#### Initial graph
+## **Creating the visualisation:**
+#### **Initial graph**
 
 The initial plot was alright, although the aesthetics could be largely improved, particularly the axes, line width, and some of the colours are too similar. The code below demonstrates how the improved aesthetics have been coded
 
@@ -218,7 +218,7 @@ The graph now has a cleaner appearance and, despite some overlap, the lines are 
 
 
 
-## Animating the graph - main visualisation
+## **Animating the graph - main visualisation:**
 To demonstrate a higher level of coding, I made the graph animated so that it progresses throughout the years. This aimed to improve engagement with the plot and better visualise how the trend changed throughout the years and will be the main graph for this project
 ```{r, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, dpi = 100}
 
@@ -242,7 +242,7 @@ if(knitr::is_html_output()){ anim_save(here("plots" , "anim240188980.gif"),
 
 
 
-## Interactive graph
+## **Interactive graph:**
 I also played around with making the graph interactive, although this would not knit to an html when combined with the animation. While this may allow for a slightly clearer interpretation of each region via the tooltip, I chose the animation over the interactive version as I believe it more closely addresses the question, by better capturing the dynamic nature of how trends change over time.
 ```{r, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, dpi = 100}
 #I have included the code for the interaction
@@ -266,7 +266,7 @@ interactive
 
 
 
-## Conclusion
+## **Conclusion:**
 
 When interpreting the graph, there is a clear decrease in healthy life expectancy (HLE) during the COVID-19 years, particularly 2020-2021. This appears to be the case for nearly all regions, highlighting the adverse impacts the disease had on the populations health. It is clear from the graph that Northern Ireland exhibits the smallest decrease during the COVID years, with the West Midlands displaying the sharpest. It is also evident that the North East has the worst HLE across all years, approximately 6 years lower than the South East (which has the highest of all regions). This could be due to a range of reasons, a possible one being different lifestyles between these regions.
 
@@ -278,7 +278,7 @@ If I were to complete this project again, I think it would be interesting to inc
 
 
 
-## References
+## **References:**
 1. Health state life expectancies in England, Northern Ireland and Wales - Office for National Statistics. (2024, March 26). Www.ons.gov.uk. https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthandlifeexpectancies/bulletins/healthstatelifeexpectanciesuk/between2011to2013and2020to2022
 
 2. Mehlmann-Wicks, J. (2022, July 28). The impact of the pandemic on population health and health inequalities. The British Medical Association Is the Trade Union and Professional Body for Doctors in the UK. https://www.bma.org.uk/advice-and-support/covid-19/what-the-bma-is-doing/the-impact-of-the-pandemic-on-population-health-and-health-inequalities
