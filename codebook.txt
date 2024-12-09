@@ -1,0 +1,90 @@
+The dataset used for this project contained a range of data, not all of which I used. You can find the dataset and more information about it at:
+https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthandlifeexpectancies/bulletins/healthstatelifeexpectanciesuk/between2011to2013and2020to2022
+
+
+
+To provide background for the data, the text below is taken from the Office for National Statistics where I found the dataset:
+
+"Healthy life expectancy is an estimate of lifetime spent in “very good” or “good” health, based on how individuals perceive their general health.
+Time series refers to a series of data points listed in chronological order. In this release, the healthy life expectancy time series refers to all data points back to 2011 to 2013
+The coronavirus (COVID-19) pandemic had a significant impact on the data collection for the Annual Population Survey. Because of the reduced sample size, subnational estimates cannot be provided at geographies smaller than regions.
+Life expectancy uses death registrations data held by the Office for National Statistics (ONS). Mid-year population estimates by age, sex and geographical area are used in combination with death registrations to calculate age-specific mortality rates used in life tables.
+In addition, health state life expectancies use data collected as part of the Annual Population Survey (APS) and data from the 2011 Census and 2021 Census.
+Health state prevalence rates are obtained from the three-year reweighted APS dataset used in healthy life expectancy and disability-free life expectancy calculations.
+
+
+The raw dataset contained several columns, all of which are explained below one by one:
+
+Area name = geographic region within the UK
+Area code = geographic code for the related region
+Sex = gender (male or female)
+2011-2013
+2012-2014
+2013-2015
+2014-2016
+2015-2017    == Year
+2016-2018
+2017-2019
+2018-2020
+2019-2021
+2020-2022 
+HLE = Healthy life expectancy by sex in England, Northern Ireland, Wales, and English regions, between 2011 to 2013 and 2020 to 2022
+LCI = refers to lower limit of confidence interval
+UCI = refers to upper limit of confidence interval
+
+
+All columns were downloaded as part of this dataset, although the ones relevant to my visualisation are stated and explained:
+
+Area name = renamed as region. Represents the region for which HLE was plotted for. Categorical. This includes 12 regions, specifically England, Northern Ireland, Wales, East, East Midlands, London, North East, North West, South East, South West, West Midlands, Yorkshire and the Humber
+Year = the midpoint of the overlapping year range from the original dataset. Numerical
+HLE = health life expectancy for each region for each year. This was averaged for gender. Numerical
+
+Other variables:
+Mean_Healthy_Life_Expectancy = Mean healthy life expectancy calculated after grouping by Region and Year. Numeric
+Start_Year = Starting year of the original overlapping year range. Numeric
+End_Year  Ending year of the original overlapping year range. Numeric
+
+
+
+Dataset Structure
+File Format: CSV
+Rows: Region name, Year, HLE value 
+
+
+Data Preparation:
+Removed metadata rows from the raw dataset.
+Filtered out columns unrelated to healthy life expectancy (e.g., confidence intervals).
+Reshaped data into long format for better visualization.
+Used midpoint years for overlapping year ranges.
+Calculated mean gender HLE's
+
+
+Data Cleaning and Summarization:
+Key Functions:
+summarize_data(): Groups data by region and year, calculates the mean of life expectancy.
+Sanity Checks: Ensured no missing values remained.
+Confirmed numeric columns for proper calculations.
+
+
+
+Data Processing:
+A custom summarization function grouped the data by region and year to calculate mean life expectancy.
+Missing or NaN values were removed to ensure clean visualisations.
+Created visualisations
+
+
+Static Plot:
+Line graph showing trends in mean healthy life expectancy over time, by region.
+Axes: X-axis = Year, Y-axis = Mean Healthy Life Expectancy.
+Key = region - colour-coded
+
+
+Additional customizations for clarity and aesthetics:
+Animated Plot showing the progression of trends over the years.
+Interactive Plot enabling exploration of data via tooltips and hover effects.
+
+
+Additional Notes:
+Exclusions: Data for Scotland is not included as it was unavailable at the time of analysis.
+
+
