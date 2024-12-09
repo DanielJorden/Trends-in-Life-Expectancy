@@ -107,18 +107,15 @@ colnames(data_long)
 In the raw data, 'Years' existed as overlapping ranges (e.g., 2011-2013 and 2012-2014). I therefore used the midpoint value for each year to simplify the scale and improve readability
 ```{r echo= TRUE, warning = FALSE, message = FALSE}
 
-#Calculate midpoint for year
+#Calculate midpoint for year and clean up columns
 data_long <- data_long %>%
   mutate(
     Start_Year = as.numeric(substr(Year, 1, 4)),  # Extract the start year
     End_Year = as.numeric(substr(Year, 6, 9)),    # Extract the end year
     Midpoint_Year = (Start_Year + End_Year) / 2   # Calculate the midpoint
-  ) %>% filter(!is.na(Midpoint_Year))
-
-#cleaning up columns: Remove old "Year", "Start_Year", and "End_Year", then rename Midpoint_Year 
-data_long <- data_long %>%
+  ) %>% filter(!is.na(Midpoint_Year)) %>%
   select(-Year, -Start_Year, -End_Year) %>%
-  rename(Year = Midpoint_Year)
+  rename(Year = Midpoint_Year) #Remove old "Year", "Start_Year", and "End_Year" columns, then rename Midpoint_Year column
 ```
 
 
@@ -133,10 +130,16 @@ data_long <- data_long %>% mutate(Life.Expectancy = as.numeric(Life.Expectancy))
 #Check data is now numeric
 print(is.numeric(data_long$Life.Expectancy))
 
-#Calculate mean across gender for each region and year and assign it as the final prepared version of data
-data_final <- data_long %>% group_by(Area.name, Year) %>%
-  summarize(mean_life_expectancy = mean(Life.Expectancy, na.rm = TRUE), .groups = "drop") %>% 
-  filter(mean_life_expectancy != "NaN")
+#Groups dataset by columns and allows flexibility with other datasets. Important if dataset is updated to Include Scotland
+summarize_data <- function(data, group_var, value_var) {
+  data %>%
+    group_by(across(all_of(group_var))) %>%
+    summarize(mean_value = mean(.data[[value_var]], na.rm = TRUE)) #Calculate mean across gender for each region and year
+}
+
+#Calls the summarise function and assigns it to data_final
+data_final <- summarize_data(data_long, group_var = c("Area.name", "Year"), value_var = "Life.Expectancy") %>%
+  filter(!is.nan(mean_value))  # Ensure no NaN values remain
 
 #Change column names
 colnames(data_final) <- c("Region", "Year", "Mean_Healthy_Life_Expectancy")
@@ -185,7 +188,8 @@ plot <- ggplot(data_final, aes(x = Year, y = Mean_Healthy_Life_Expectancy, color
   scale_x_continuous(breaks = unique(data_final$Year)) + 
   theme_bw() +
    theme(
-    panel.background = element_rect(fill = "lightgrey", color = NA),
+    panel.grid.major = element_line(color = "gray87", size = 0.5),
+    panel.background = element_rect(fill = "seashell", color = NA),
     plot.background = element_rect(fill = "white", color = NA),
     axis.text = element_text(size = 10),
     axis.title = element_text(size = 10, face = "bold"),
@@ -201,7 +205,7 @@ plot
 ggsave(here("plots", "plot.png"), bg = "white", width = 10, height = 8, units = "in")
 
 ```
-The graph now has a cleaner appearance and, despite some overlap, the lines are easier to read. I decided to keep the background a basic grey colour as I think it works well with contrasting the different colours, and the grid lines help to better read the Y axis
+The graph now has a cleaner appearance and, despite some overlap, the lines are easier to read. I decided to keep the background a basic light colour as I think it works well with contrasting the different line colours, as well as the grid lines to help better read the Y axis
 
 
 
@@ -256,7 +260,7 @@ interactive
 
 When interpreting the graph, there is a clear decrease in healthy life expectancy (HLE) during the COVID-19 years, particularly 2020-2021. This appears to be the case for nearly all regions, highlighting the adverse impacts the disease had on the populations health. It is clear from the graph that Northern Ireland exhibits the smallest decrease during the COVID years, with the West Midlands displaying the sharpest. It is also evident that the North East has the worst HLE across all years, approximately 6 years lower than the South East (which has the highest of all regions). This could be due to a range of reasons, a possible one being different lifestyles between these regions.
 
-A notable limitation of this graph/the data is that it does not extend to more recent years, or provide any predictions about future HLE projections. This data is therefore unable to inform us about how external challenges, such as post-pandemic recovery, may influence HLE, or provide an indication of the time-frame it will take to return to HLE levels of previous years. An additional consideration is that it does not explore the possible factors that influence healthy life expectancy. It is clear that HLE decreased during COVID years, although the precise reasons for this remains ambiguous. Increased social isolation, restricted access to healthcare, and higher rates of stress are likely factors, although they remain unexamined in this graph.
+A notable limitation of this graph/the data is that it does not extend to more recent years, or provide any predictions about future HLE projections. This data is therefore unable to inform us about how external challenges, such as post-pandemic recovery, may influence HLE, or provide an indication of the time-frame it will take to return to HLE levels of previous years. An additional consideration is that in the wider context, it does not explore the possible factors that influence healthy life expectancy. It is clear that HLE decreased during COVID years, although the precise reasons for this remains ambiguous. Increased social isolation, restricted access to healthcare, and higher rates of stress are likely factors, although they remain unexamined in this graph.
 
 Adding extended datasets from more recent and future years on HLE should be implemented into the above visualisation with ease. This dataset can also provide many informative visualisations, for example, how life expectancy differs between males and females among these regions. Plotting this may address questions comparing  how gender influences HLE, such as 'have differences in HLE between males and females increased or decreased over the years?' and if so, 'which regions have the most change?' Future visualisations will provide interesting answers to these questions, and updated datasets with more recent and future years will highlight any other interesting emerging patterns.
 
