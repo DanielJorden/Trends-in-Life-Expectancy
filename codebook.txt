@@ -42,7 +42,8 @@ HLE = health life expectancy for each region for each year. This was averaged fo
 Other variables:
 Mean_Healthy_Life_Expectancy = Mean healthy life expectancy calculated after grouping by Region and Year. Numeric
 Start_Year = Starting year of the original overlapping year range. Numeric
-End_Year  Ending year of the original overlapping year range. Numeric
+End_Year = Ending year of the original overlapping year range. Numeric
+Midpoint_Year = midpoiont of overlapping years. Renamed to Year
 
 
 
